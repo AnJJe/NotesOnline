@@ -1,0 +1,42 @@
+<!-- users/templates/users/login.html -->
+{% extends 'base.html' %}
+
+{% block title %}Online.Notes | Login{% endblock %}
+
+{% block content %}
+    <div class="form-container-login">
+        <h1>Login</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% for field in form %}
+                <div class="row row-register-login">
+                    <div class="col-4 div-col-register-login"> {{ field.label }}:</div>
+                    <div class="col align-self-center">
+                        {{ field }}
+                        <div class="login-helper">
+                            {{ field.help_text }}
+                        </div>
+                        {% if field.errors %}
+                            <div class="error">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="login-btn btn btn-outline-primary">Login</button>
+            <p class="mt-3 text-center">
+                Not registered? <a href="{% url 'register' %}">Do it now</a>.
+            </p>
+        </form>
+    </div>
+{% endblock %}

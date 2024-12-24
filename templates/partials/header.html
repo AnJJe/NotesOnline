@@ -1,0 +1,52 @@
+<!-- header.html -->
+<header>
+    <nav class="main-header navbar navbar-expand-lg navbar-light justify-content-between">
+        <div class="container-fluid">
+            {% load static %}
+            <!-- Логотип и название сайта -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{% static 'images/logo.svg' %}" class="logo" alt="Logo">
+                <span href="{% url 'login' %}" class="site-title">Notes.Online</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Левый список с навигацией -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'home' %}" class="nav-link">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'notes:view_notes' %}" class="nav-link">View Notes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'board:boards' %}" class="nav-link">Boards</a>
+                        </li>
+                        {% if user.is_superuser %}
+                            <li class="nav-item">
+                                <a href="/admin/" class="nav-link" style="color: red">Admin</a>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}" class="nav-link">Login</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <!-- Правый список для профиля и иконки -->
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item d-flex align-items-center">
+                        <h3 class="bi bi-person-lines-fill m-0"></h3>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'edit_user' %}" class="nav-link">Profile of <strong>{{ request.user }}</strong></a>
+                    </li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>

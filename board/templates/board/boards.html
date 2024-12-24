@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notes.Online | Boards{% endblock %}
+
+{% block content %}
+    <style>
+        /* Основной контейнер с закругленными углами и тенями */
+        .container-box {
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Стиль заголовка */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Стиль списка досок */
+        .list-group-item {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        /* Стили для бейджей и кнопок */
+        .badge-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-outline-primary, .btn-outline-info, .btn-outline-secondary, .btn-outline-success {
+            width: 100%;
+        }
+    </style>
+
+    <div class="container-box">
+        <h1>Boards</h1>
+
+        <form method="POST" action="{% url 'board:join_board' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="code">Enter Join Code:</label>
+                <input type="text" class="form-control" id="code" name="code" required>
+            </div>
+            <button type="submit" class="btn btn-outline-success">Join Board</button>
+        </form>
+
+        {% if user.is_authenticated and user.userprofile.is_admin %}
+            <a href="{% url 'board:create_board' %}" class="btn btn-outline-secondary" style="margin-top: 20px">Create
+                New Board</a>
+        {% endif %}
+    </div>
+
+    <div class="container-box">
+        <ul class="list-group">
+            {% for board in member_boards %}
+                <li class="list-group-item">
+                    {% if board.owner == user %}
+                        <strong>{{ board.name }}</strong> (Owner)
+                    {% else %}
+                        {{ board.name }}
+                    {% endif %}
+                    <span class="badge badge-secondary float-right" style="margin-left: 10px">{{ board.members.count }} members</span>
+                    {% if board.owner != user %}
+                    <a href="{% url 'board:exclude_member' board.pk user.pk %}" class="btn btn-sm btn-outline-danger float-right"
+                       style="width: 15vh; margin-left: 10px">Leave</a>
+                    {% endif %}
+                    <a href="{% url 'board:view_board' board.pk %}" class="btn btn-sm btn-outline-info float-right"
+                       style="width: 15vh;">View</a>
+                </li>
+            {% empty %}
+                <h4 style="text-align: center">No boards yet</h4>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

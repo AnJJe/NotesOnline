@@ -1,0 +1,21 @@
+<!-- templates/home.html -->
+<!--  Не используется в конечном проекте  -->
+{% extends 'base.html' %}
+
+{% block title %}Notes.Online | Home Page{% endblock %}
+
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+    </head>
+    <body>
+    <h2>Welcome to the Home Page</h2>
+    <p>Hello, {{ request.user.username }}!</p>
+    {% if request.user.userprofile.is_admin %}
+        <p>You are an admin</p>
+    {% else %}
+        <p>You are not an admin</p>
+    {% endif %}
+    </body>
+{% endblock %}

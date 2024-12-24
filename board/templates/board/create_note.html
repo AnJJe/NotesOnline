@@ -1,0 +1,28 @@
+<!-- notes/templates/notes/input.html -->
+{% extends 'base.html' %}
+
+{% block title %}Online.Notes | Adding Note to {{ board_par }}{% endblock %}
+
+{% block content %}
+    <div class="form-container-input">
+        <h1>Enter your Note</h1>
+        <form method="POST" action="{% url 'board:create_note' pk %}">
+            {% csrf_token %}
+            <div class="mainbox-input">
+                <div class="box-input">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                </div>
+                <div>
+                    {{ form.text.label_tag }}
+                    {{ form.text }}
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn1-input">Add Note</button>
+            </div>
+        </form>
+        <a href="{% url 'board:view_board' pk %}" class="btn btn-outline-info btn1-edit" style="margin-top: 20px">
+            Back to
+            Board
+        </a>
+    </div>
+{% endblock %}

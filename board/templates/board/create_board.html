@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notes.Online | Create New Board{% endblock %}
+
+{% block content %}
+<style>
+    /* Стиль основного контейнера */
+    .form-container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    /* Стиль заголовка */
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    /* Стили для кнопок */
+    .btn-outline-primary, .btn-outline-secondary {
+        width: 100%;
+        margin-top: 10px;
+    }
+</style>
+
+<script src="{% static 'board/main.js' %}"></script>
+
+<div class="form-container">
+    <h2>Create New Board</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-outline-primary">Create Board</button>
+    </form>
+
+    <!-- Ссылка на отмену, исправленная на кнопку-ссылку -->
+    <a href="{% url 'board:boards' %}" class="btn btn-outline-secondary">Cancel</a>
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+<!-- notes/templates/notes/view.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Online.Notes | List{% endblock %}
+
+{% block content %}
+    <script src="{% static 'notes/main.js' %}"></script>
+
+    <h1 class="h-view">Your Notes.List</h1>
+
+    <div class="main-form-container-view">
+        <div class="row" id="notes-container">
+            {% for note in user_notes %}
+                <div class="col-sm-6" style="margin-top: 25px">
+                    <div class="card card-view">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h4 class="d-inline">{{ note.title }}</h4>
+                                <small class="d-inline"
+                                       style="color: slategray; margin-left: 5px">on {{ note.created_at|date:"H:i d F Y" }}</small>
+                            </div>
+
+                            {% if note.board_id %}
+                                <a href="{% url 'board:view_board' note.board_id %}" style="color: slategray">On the
+                                    desk</a>
+                            {% endif %}
+                            <p class="card-text">{{ note.text }}</p>
+                            <a href="{% url 'notes:edit_note' note.id %}">Edit this Note</a>
+
+                            <!-- Форма для пометки заметки как завершенной -->
+                            <form method="POST" action="{% url 'notes:update_note' note.id %}"
+                                  style="margin-top: 20px;">
+                                {% csrf_token %}
+                                <button name="finished" value="1" class="btn btn-view btn-outline-warning btn-sm">
+                                    Mark finished
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <h4 class="h-view">No Notes yet. <a href="{% url 'notes:input' %}">Create one!</a></h4>
+            {% endfor %}
+        </div>
+    </div>
+    {% if count_notes > 20 %}
+        <button id="load-more" class="btn btn-view btn-outline-info" data-offset="20">Load more</button>
+    {% endif %}
+    <h5 class="h-view">Didn't find? Select the Note marked 'finished':</h5>
+
+    <div class="form-container-view">
+        <form id="note-selection-form" method="POST">
+            {% csrf_token %}
+            <select name="note_id" id="note_id" class="form-control">
+                {% for note in finished_notes %}
+                    <option value="{{ note.id }}">
+                        {{ note.title }} on {{ note.created_at|date:"H:i d F Y" }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+        <button id="load-note" class="btn btn-view btn-outline-primary btn-sm">Show</button>
+    </div>
+
+    <div id="divinvis" class="note-container-view note-container-invisible">
+        <div class="card card-view invisible-button" id="divinvis" style="width: 100%; margin-top: 20px;">
+            <div id="note-details" class="card-body">
+                <h4 id="note-title" class="card-title"></h4>
+                <p id="note-text" class="card-text"></p>
+
+                <button id="toggle-finished" class="btn btn-view btn-outline-success btn-sm invisible-button">
+                    Make unfinished
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% for note in notes %}
+<li class="list-group-item lst-note">
+    <div>
+        <h3>{{ note.title }}</h3>
+        <small style="color: slategray">by {{ note.user.username }}
+            on {{ note.created_at|date:"H:i d F Y" }}</small>
+        <p>{{ note.text }}</p>
+    </div>
+    <div style="width:30vh">
+        {% if note.user == request.user or request.user == board.owner %}
+            <a href="{% url 'board:edit_note' note.pk %}"
+               class="btn btn-sm btn-outline-secondary">Edit</a>
+        {% endif %}
+        <a href="{% url 'board:toggle_finished' note.pk %}"
+           class="btn btn-sm btn-{{ note.finished|yesno:'success,warning' }}"
+           style="min-width: 100px"
+           data-finished-state="{{ note.finished }}">
+            {% if note.finished %}
+                <span class="finished-text">Mark as Unfinished</span>
+            {% else %}
+                <span class="unfinished-text">Mark as Finished</span>
+            {% endif %}
+        </a>
+    </div>
+</li>
+{% endfor %}

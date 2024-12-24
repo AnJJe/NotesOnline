@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Notes.Online | {{ board.name }}{% endblock %}
+
+{% block content %}
+    <style>
+        /* Основной стиль для контейнера */
+        .board-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        /* Заголовок и стиль подзаголовков */
+        .board-container h1, .board-container h2 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        /* Стиль списка и элементов */
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Стили кнопок */
+        .btn {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        /* Стили для Join Code */
+        .join-code {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #28a745;
+            text-align: center;
+        }
+
+        /* Дата генерации кода */
+        .generated-at {
+            font-size: 0.9em;
+            color: #6c757d;
+            text-align: center;
+        }
+
+    </style>
+
+    <script src="{% static 'board/main.js' %}"></script>
+
+
+    <div class="container board-container">
+        <h1>{{ board.name }}</h1>
+        <div class="row justify-content-between">
+            <div class="col-md-3">
+                <a href="{% url 'board:create_note' board.pk %}" class="btn btn-sm btn-outline-success">Add Note</a>
+            </div>
+            {% if request.user == board.owner %}
+                <div class="col-md-3">
+                    <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#deleteModal">
+                        Delete Board
+                    </button>
+                </div>
+                <!-- Модальное окно подтверждения удаления -->
+                <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete this board?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" style="width: auto; margin-top: 15px"
+                                        data-bs-dismiss="modal">Cancel
+                                </button>
+                                <form method="post" action="{% url 'board:delete_board' board.pk %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">OK</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <!-- Список заметок -->
+            <div class="col-md-8">
+                <h2>Notes:</h2>
+                <div>
+                    <button id="refresh" class="btn btn-view btn-primary btn-primary-chngd" style="width: auto"><i
+                            class="bi bi-arrow-clockwise"></i>Refresh (highly recommend to see actual board)
+                    </button>
+                </div>
+                <ul class="list-group lsr-nt" id="list_notes"  style="margin-top: 20px">
+                    {% for note in notes %}
+                        <li class="list-group-item lst-note" id="note-{{ note.id }}">
+                            <div>
+                                <h3>{{ note.title }}</h3>
+                                <small style="color: slategray">by {{ note.user.username }}
+                                    on {{ note.created_at|date:"H:i d F Y" }}</small>
+                                <p>{{ note.text }}</p>
+                            </div>
+
+                            <div style="width:30vh">
+                                {% if note.user == request.user or request.user == board.owner %}
+                                    <a href="{% url 'board:edit_note' note.pk %}"
+                                       class="btn btn-sm btn-outline-secondary">Edit</a>
+
+                                {% endif %}
+                                <a href="{% url 'board:toggle_finished' note.pk %}"
+                                   class="btn btn-sm btn-{{ note.finished|yesno:'success,warning' }}"
+                                   style="min-width: 100px"
+                                   data-finished-state="{{ note.finished }}">
+                                    {% if note.finished %}
+                                        <span class="finished-text">Mark as Unfinished</span>
+                                    {% else %}
+                                        <span class="unfinished-text">Mark as Finished</span>
+                                    {% endif %}
+                                </a>
+                            </div>
+
+                        </li>
+                    {% empty %}
+                        <p>No notes yet.</p>
+                    {% endfor %}
+                </ul>
+                {% if count_notes > 20 %}
+                    <button id="load-more" class="btn btn-view btn-outline-info" data-offset="20">Load more</button>
+                {% endif %}
+                {# Для функции load_more#}
+                <input type="hidden" id="board-id" value="{{ board.id }}">
+
+            </div>
+
+            <!-- Список участников и код приглашения -->
+            <div class="col-md-4">
+
+                {% if request.user == board.owner %}
+                    <h2>Join Code:</h2>
+                    <p id="code-{{ board.pk }}" class="join-code">{{ code.code }}</p>
+                    <button id="gen-code" class="btn btn-success btn-success-chngd generate-new-code-btn" data-board-id="{{ board.pk }}">
+                        Generate New Code
+                    </button>
+                    <small id="generated-at-{{ board.pk }}" class="generated-at">Generated
+                        at: {{ code.generated_at|date:"H:i d F Y" }}</small>
+                {% endif %}
+
+                <h2 style="margin-top: 20px">Members:</h2>
+                <ul class="list-group">
+                    {% for member in board.members.all %}
+                        {% if member == board.owner %}
+                            <li class="list-group-item">{{ member.username }} <small
+                                    style="color: #6c757d;">(Admin)</small></li>
+                        {% else %}
+                            <li class="list-group-item">{{ member.username }}
+                                {% if request.user == board.owner %}
+                                    <a href="{% url 'board:exclude_member' board.pk member.pk %}"
+                                       class="btn btn-outline-danger" style="width: auto; margin-top: 0">Exclude</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

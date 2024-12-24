@@ -1,0 +1,466 @@
+@import "bootstrap.css";
+/*@import "bootstrap-icons.min.css";*/
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+html {
+    position: relative;
+}
+
+main {
+    flex: 1;
+}
+
+input, textarea, select, .uneditable-input {
+    border: 1px solid #bbb;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+input {
+    height: auto !important;
+}
+
+.main-body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-div {
+    flex: 1;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 5px; /* Расстояние между логотипом и названием сайта */
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.main-header {
+    background-color: #c9d9f1;
+}
+
+.main-footer {
+    background-color: #c9d9f1;
+}
+
+/* Стиль для контейнера формы */
+.form-container-login {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container-login h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 15px;
+}
+
+/* Стиль для отображения ошибок */
+.error {
+    color: red;
+    padding-top: 1%;
+}
+
+.login-helper {
+    color: slategray;
+    padding-top: 1%
+}
+
+.form-container-register {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container-register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register-btn {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.cancel-btn {
+    width: 40%;
+    margin-top: 10px;
+}
+
+.reg-checkbox {
+    max-width: 20px;
+    min-height: 20px;
+}
+
+.row-register-login {
+    padding-bottom: 2%;
+}
+
+.div-col-register-login {
+    padding-left: 0;
+}
+
+.register-helper {
+    color: slategray;
+    padding-top: 1%;
+}
+
+.form-container-input {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стиль заголовка */
+.form-container-input h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для элементов формы */
+.form-container-input .box-input, .form-container-input .mainbox-input > div {
+    margin-bottom: 15px;
+}
+
+/* Стили для чекбокса */
+.checkbox-note-input {
+    max-width: 20px;
+    min-height: 20px;
+    margin-bottom: 0;
+}
+
+/* Стили для кнопки */
+.btn1-input {
+    width: 100%;
+}
+
+.flag-finished-input {
+    gap: 10px;
+    align-items: center;
+}
+
+/* Основной контейнер для улучшенного восприятия */
+.main-form-container-view {
+    max-width: 200vh;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-container-view, .note-container-view {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.note-container-invisible-view {
+    display: none;
+}
+
+/* Стили для заголовков */
+.h-view {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Поля выбора и кнопки */
+.form-control-view, .btn-view {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Карточки заметок */
+.card-view {
+    margin-top: 20px;
+}
+
+/* Кнопка, скрывающая элемент */
+.invisible-button {
+    display: none;
+}
+
+/* Основной контейнер для улучшенного восприятия */
+.main-form-container-view {
+    max-width: 200vh;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.form-container-view, .note-container-view {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.note-container-invisible {
+    display: none;
+}
+
+/* Стили для заголовков */
+.h-view {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Поля выбора и кнопки */
+.form-control-view, .btn-view {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Карточки заметок */
+.card-view {
+    margin-top: 20px;
+}
+
+/* Кнопка, скрывающая элемент */
+.invisible-button {
+    display: none;
+}
+
+/* Стиль для контейнера формы */
+.form-container-edit {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стиль заголовка */
+.form-container-edit h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Стили для элементов формы */
+.form-container-edit .box-edit, .form-container-edit .mainbox-edit > div {
+    margin-bottom: 15px;
+}
+
+
+/* Стили для кнопки */
+.btn1-edit {
+    width: 100%;
+}
+
+/* Board */
+/* board.css */
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #2c3e50;
+}
+
+.list-group-item {
+    border-radius: 0;
+}
+
+.finished {
+    background-color: #f0f0f0;
+    opacity: 0.7;
+}
+
+.btn-primary-chngd {
+    background-color: #3498db;
+    border-color: #2980b9;
+}
+
+.btn-success-chngd {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+}
+
+.btn-danger-chngd {
+    background-color: #e74c3c;
+    border-color: #c0392b;
+}
+
+.badge-secondary {
+    background-color: #95a5a6;
+}
+
+.float-right {
+    float: right;
+}
+
+/* Стили для страницы доски */
+.board-page {
+    display: flex;
+    justify-content: space-between;
+}
+
+.notes-list {
+    width: 70%;
+}
+
+.members-list {
+    width: 25%;
+}
+
+.join-code {
+    margin-top: 20px;
+}
+
+/* Стили для формы создания заметки */
+.create-note-form {
+    margin-bottom: 20px;
+}
+
+/* Стили для кнопок действий над заметками */
+.action-buttons {
+    margin-top: 10px;
+}
+
+.toggle-finished-btn {
+    background-color: #2ecc71;
+    border-color: #27ae60;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-note-btn {
+    background-color: #e74c3c;
+    border-color: #c0392b;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Стили для страницы присоединения к доске */
+.join-board-page {
+    text-align: center;
+}
+
+.join-code-input {
+    width: 50%;
+    height: 40px;
+    font-size: 18px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.join-button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.join-button:hover {
+    background-color: #2980b9;
+}
+
+/* Стиль блока сообщения */
+.alert {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Кнопка закрытия */
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: inherit;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+.alert {
+    position: relative;
+    padding-right: 40px; /* Отступ справа для кнопки закрытия */
+}
+
+/* Центровка кнопки закрытия */
+.alert .btn-close {
+    position: absolute;
+    top: 50%;
+    right: 10px; /* Отступ от правого края блока */
+    transform: translateY(-50%); /* Центрирование по вертикали */
+}

@@ -1,0 +1,44 @@
+<!-- edit_user.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Online.Notes | Profile{% endblock %}
+
+{% block content %}
+    <div class="form-container-register">
+        <h2>Profile editing</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                <div class="error">
+                    {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% for field in form %}
+                <div class="row row-register-login">
+                    <div class="col-4 div-col-register-login"> {{ field.label }}:</div>
+                    <div class="col align-self-center">
+                        {{ field }}
+                        <div class="register-helper">
+                            {{ field.help_text | safe }}
+                        </div>
+                        {% if field.errors %}
+                            <div class="error">
+                                {% for error in field.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="register-btn btn btn-outline-success">Save</button>
+        </form>
+        <a href="{% url 'logout' %}">
+            <button type="button" class="cancel-btn btn btn-outline-danger">Logout</button>
+        </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+<!-- notes/templates/notes/input.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Online.Notes | Home{% endblock %}
+
+{% block content %}
+    <style>
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'notes/main.js' %}"></script>
+    <div class="form-container-input">
+        <h1>Enter your Note</h1>
+        <form method="POST" action="{% url 'notes:input' %}">
+            {% csrf_token %}
+            <div class="mainbox-input">
+                <div class="box-input">
+                    {{ form.title.label_tag }}
+                    {{ form.title }}
+                </div>
+                <div>
+                    {{ form.text.label_tag }}
+                    {{ form.text }}
+                </div>
+                <div class="d-flex mb-4 flag-finished-input">
+                    {{ form.finished }}
+                    <label class="form-check-label">Put a Note aside</label>
+                </div>
+                <button type="submit" class="btn btn-outline-primary btn1-input">Add Note</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% for note in notes %}
+    {% if not note.finished %}
+        <div class="col-sm-6" style="margin-top: 25px">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">{{ note.title }}</h4>
+                    <p class="card-text">{{ note.text }}</p>
+                    <a href="{% url 'notes:edit_note' note.id %}">Edit this Note</a>
+
+                    <form method="POST" action="{% url 'notes:update_note' note.id %}" style="margin-top: 20px;">
+                        {% csrf_token %}
+                        <button name="finished" value="1" class="btn btn-outline-warning btn-sm">Mark finished</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
